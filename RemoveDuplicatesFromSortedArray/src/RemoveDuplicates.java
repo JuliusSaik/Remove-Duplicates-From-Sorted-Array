@@ -4,7 +4,7 @@ public class RemoveDuplicates {
 
 	public static void main(String[] args) {
 
-		int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+		int[] nums = {1, 1, 2};
 		System.out.println(Arrays.toString(nums) + " Regular List");
 	
 		System.out.println(String.valueOf(findKOfInts(nums) + " Main Call"));
@@ -14,15 +14,20 @@ public class RemoveDuplicates {
 	
 	public static void removeDuplicatesRight(int[] nums, int toSearch, int currentIndex) {
 		
-		int middle = currentIndex;
-		int right = middle + 1;
+		int right = currentIndex + 1;
 		
 				
 		if(currentIndex != nums.length - 1) {
 		
-			while(nums[right] == nums[middle]) {
+			while(nums[right] == nums[currentIndex]) {
 				nums[right] = 111;
-				right++;
+				
+				if(right == nums.length - 1) {
+					break;
+					 
+				} else {
+					right++;
+				}
 			}
 		
 		}
@@ -36,9 +41,8 @@ public class RemoveDuplicates {
 		
 		int lengthOfNums = nums.length;
 		
-		for (int i = 0; i < lengthOfNums; i++) {
+		for (int i = 0; i < lengthOfNums - 1; i++) {
 			
-
 			if (nums[i] != 111) {
 			
 				removeDuplicatesRight(nums, nums[i], i);
@@ -55,35 +59,18 @@ public class RemoveDuplicates {
 	
 	static int[] sortArrayList(int[] nums) {
 		
-			int lowestIndex = 0;
+		for(int i = 1; i < nums.length; i++) {
 			
+			int key = nums[i];
+			int j = i - 1;
 			
-			for(int i = 0; i < nums.length; i++) {
-				
-				lowestIndex = i;
-
-				for(int a = i; a < nums.length; a++) {
-					
-					if(nums[a] < nums[lowestIndex]) {
-						lowestIndex = a;
-						
-	
-					}
-					
-					
-				}
-				
-				if(lowestIndex != i) { 
-					int toSwitch = nums[lowestIndex];
-				 
-					nums[lowestIndex] = nums[i]; 
-					nums[i] = toSwitch;
-				  }
-				
-				
+			while(j >= 0 && nums[j] > key) {
+				nums[j + 1] = nums[j];
+				j = j -1;
 			}
-			
-	
+		
+			nums[j + 1] = key;
+		}
 			
 		
 		System.out.println("Finished" + Arrays.toString(nums));
@@ -99,19 +86,24 @@ public class RemoveDuplicates {
 	
 	public static int findKOfInts(int[] nums) {
 		
-		int count = 0;
-		int[] fixedNums = findDuplicatesInList(nums);
-		
-		for (int i = 0; i < fixedNums.length; i++) {
-						
-			if(fixedNums[i] != 111) {
-				count++;
+		if(nums.length != 0) {
+			int[] fixedNums = findDuplicatesInList(nums);
+			
+			int lastIndex = fixedNums.length - 1;
+			int count = nums.length;
+	
+			while(fixedNums[lastIndex] == 111) {
+				count--;
+				lastIndex--;
 			}
+			return count;
+
+		} else {
+			return 0;
 		}
 		
 		
 		
-		return count;
 		
 		
 		
