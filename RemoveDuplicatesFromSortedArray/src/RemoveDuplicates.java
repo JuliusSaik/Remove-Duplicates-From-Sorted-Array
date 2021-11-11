@@ -4,47 +4,31 @@ public class RemoveDuplicates {
 
 	public static void main(String[] args) {
 
-		int[] nums = {2, -2, 3, 4, 4, 5, 8, 9, 10, 10, 10, 10, 11, 12, 15};
-		System.out.println(Arrays.toString(nums));
-		
+		int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+		System.out.println(Arrays.toString(nums) + " Regular List");
 	
-		System.out.println(String.valueOf(findKOfInts(nums)));
-		//Expected result = nums {2, 111, }
+		System.out.println(String.valueOf(findKOfInts(nums) + " Main Call"));
 				
 		
 	}
 	
-	public static int indexOfDuplicate(int[] nums, int toSearch, int currentIndex, int low, int high) {
+	public static void removeDuplicatesRight(int[] nums, int toSearch, int currentIndex) {
 		
-		//if it tries to search "deleted" index, return same index.
-	    int middle = low  + ((high - low) / 2);
-
-	    //if there are no duplicates return -1(index out of bounds exception)
-	    if (high < low) {
-	        return -1;
-	    }
+		int middle = currentIndex;
+		int right = middle + 1;
 		
-	    if(toSearch == nums[middle]) {
-	    	
-	    	if(middle != currentIndex) {
-	    		return middle;
-	    	} else {
-	    		return indexOfDuplicate(nums, toSearch, currentIndex, low, middle -1);
-	    	}
-	    	
-	    }
-	    else if (nums[middle] > toSearch){
-	    	
-	    
-	    	return indexOfDuplicate(nums, toSearch, currentIndex, low, middle - 1);
-	  
-	    } else if(nums[middle] < toSearch) {
-	    	
-	    	return indexOfDuplicate(nums, toSearch, currentIndex, middle + 1, high);
-	    	
-	    } 
-	    
-		return middle;
+				
+		if(currentIndex != nums.length - 1) {
+		
+			while(nums[right] == nums[middle]) {
+				nums[right] = 111;
+				right++;
+			}
+		
+		}
+		System.out.println(Arrays.toString(nums));
+		
+	   
 		
 	}
 	
@@ -54,19 +38,16 @@ public class RemoveDuplicates {
 		
 		for (int i = 0; i < lengthOfNums; i++) {
 			
+
 			if (nums[i] != 111) {
 			
-				int indexOfDuplicate = indexOfDuplicate(nums, nums[i], i, 0, lengthOfNums - 1);
+				removeDuplicatesRight(nums, nums[i], i);
 				
-				if(indexOfDuplicate != -1) {
-					nums[indexOfDuplicate] = 111; //acts as deletion
-				}
 				
 			}
 			
 		}
 		
-		System.out.println(Arrays.toString(nums));
 		return sortArrayList(nums);
 		
 		
